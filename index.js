@@ -8,13 +8,25 @@ const inputSection=document.querySelector(".section-input")
 simulate.addEventListener("click", function () {
     const numberOfLift=parseInt(liftNumber.value)
     const numberOfFloor=parseInt(floorNumber.value)
-  if (numberOfLift > 9) {
+ if(isNaN(numberOfFloor) || isNaN(numberOfLift)){
+  alertSection.classList.add("section-alert");
+  alertSection.innerHTML="Please Enter A Valid Number";
+  setTimeout(()=>{
+    alertSection.classList.remove("section-alert");
+  },5000);
+ }
+
+
+ else if (numberOfLift > 9 || numberOfLift < 1 ) {
     alertSection.classList.add("section-alert");
     alertSection.innerHTML="Please Enter A Value Between 1 to 9";
     setTimeout(() => {
       alertSection.classList.remove("section-alert");
     }, 5000);
-  } else {
+
+  } 
+  
+  else {
     inputSection.classList.add("hidden");
     addFloor(numberOfFloor, numberOfLift);
   }
