@@ -8,7 +8,7 @@ const inputSection=document.querySelector(".section-input")
 simulate.addEventListener("click", function () {
     const numberOfLift=parseInt(liftNumber.value)
     const numberOfFloor=parseInt(floorNumber.value)
-  if (numberOfLift > 4) {
+  if (numberOfLift > 9) {
     alertSection.classList.add("section-alert");
     setTimeout(() => {
       alertSection.classList.remove("section-alert");
