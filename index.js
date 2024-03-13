@@ -10,6 +10,7 @@ simulate.addEventListener("click", function () {
     const numberOfFloor=parseInt(floorNumber.value)
   if (numberOfLift > 9) {
     alertSection.classList.add("section-alert");
+    alertSection.innerHTML="Please Enter A Value Between 1 to 9";
     setTimeout(() => {
       alertSection.classList.remove("section-alert");
     }, 5000);
@@ -90,7 +91,7 @@ function LiftStatus(ClickedFloor) {
 function MovingTheLift(ClickedFloor, LiftMove) {
   let currentlocations = LiftMove.dataset.currentlocation;
   let timming = Math.abs(ClickedFloor - currentlocations) * 2;
-  let move = (ClickedFloor - 1) * -115;
+  let move = (ClickedFloor - 1) * -125;
   LiftMove.style.transition = `transform ${timming}s linear`;
   LiftMove.style.transform = "translateY(" + move + "px)";
   LiftMove.classList.add("busy");
