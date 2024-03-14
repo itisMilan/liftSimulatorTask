@@ -212,7 +212,10 @@
     height: 154px;
   }
   
-  .section-output > div:last-child > .navigation > #up-only {
+  .section-output > div:last-child > .navigation > #Down-only {
+    display: none;
+  }
+  .section-output > div:first-child > .navigation > #up-only {
     display: none;
   }
   

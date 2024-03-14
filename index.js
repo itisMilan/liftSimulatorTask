@@ -1,3 +1,4 @@
+// Get value from the html elements
 const floorNumber = document.getElementById("floors");
 const liftNumber = document.getElementById("lift");
 const simulate = document.querySelector(".Generate");
@@ -5,19 +6,31 @@ const outputSection = document.querySelector(".section-output");
 const alertSection = document.querySelector(".alert-sections");
 const inputSection=document.querySelector(".section-input")
 
+// Event listener for the "Generate" button
 simulate.addEventListener("click", function () {
+  // Get the number of floors and lifts from input fields
     const numberOfLift=parseInt(liftNumber.value)
     const numberOfFloor=parseInt(floorNumber.value)
+
+    // Input validation
  if(isNaN(numberOfFloor) || isNaN(numberOfLift)){
+  // Display alert for invalid numbers
   alertSection.classList.add("section-alert");
   alertSection.innerHTML="Please Enter A Valid Number";
   setTimeout(()=>{
     alertSection.classList.remove("section-alert");
   },5000);
  }
+ else if(numberOfFloor==1){
+  // if there are only one floor
+  inputSection.classList.add("hidden");
+  alertSection.innerHTML="There is only one floor. No lifts are needed";
+    addFloor(numberOfFloor);
+ }
 
 
  else if (numberOfLift > 9 || numberOfLift < 1 ) {
+  // Display alert if lift count is outside the allowed range
     alertSection.classList.add("section-alert");
     alertSection.innerHTML="Please Enter A Value Between 1 to 9";
     setTimeout(() => {
@@ -27,6 +40,7 @@ simulate.addEventListener("click", function () {
   } 
   
   else {
+    // All good! Hide input and generate the simulation
     inputSection.classList.add("hidden");
     addFloor(numberOfFloor, numberOfLift);
   }
@@ -34,7 +48,9 @@ simulate.addEventListener("click", function () {
 
 // adding Floor
 function addFloor(numberOfFloor, liftNo) {
-  outputSection.innerHTML = "";
+  outputSection.innerHTML = ""; // Clear previous floors
+
+    // Loop backwards to create floors from top to bottom 
   for (let i = numberOfFloor; i > 0; i--) {
     outputSection.innerHTML =
       outputSection.innerHTML +
@@ -56,7 +72,7 @@ function addFloor(numberOfFloor, liftNo) {
   }
 }
 
-// adding  Lift
+// Function to create elevator elements
 function addLift(e) {
   let containerLift = document.createElement("div");
   containerLift.classList.add("lifts");
@@ -74,7 +90,7 @@ function addLift(e) {
 }
 
 let x = 0;
-// add Event on Up and down
+// Event listener for "Up" and "Down" buttons
 document.addEventListener("click", (e) => {
   if (e.target.classList.contains("navigationButtons")) {
     if (e.target.dataset.floor == x) {
@@ -85,7 +101,7 @@ document.addEventListener("click", (e) => {
     x = e.target.dataset.floor;
   }
 });
-
+// Function to find an available elevator and start movement
 function LiftStatus(ClickedFloor) {
   const selectedLift = Array.from(document.getElementsByClassName("lift"));
 
@@ -99,7 +115,7 @@ function LiftStatus(ClickedFloor) {
   }
 }
 
-// So, let's move the lift
+// Function to animate the movement of the elevator
 function MovingTheLift(ClickedFloor, LiftMove) {
   let currentlocations = LiftMove.dataset.currentlocation;
   let timming = Math.abs(ClickedFloor - currentlocations) * 2;
@@ -109,17 +125,17 @@ function MovingTheLift(ClickedFloor, LiftMove) {
   LiftMove.classList.add("busy");
   LiftMove.dataset.currentlocation = ClickedFloor;
 
-  // open the Doors
+  // Open the doors
   setTimeout(() => {
     LiftMove.children[0].classList.add("lift-left-open");
     LiftMove.children[1].classList.add("lift-right-open");
   }, timming * 1000 + 1000);
-
+// Close the doors
   setTimeout(() => {
     LiftMove.children[0].classList.remove("lift-left-open");
     LiftMove.children[1].classList.remove("lift-right-open");
   }, timming * 1000 + 4000);
-
+// Mark the lift as available after the full process is complete
   setTimeout(() => {
     LiftMove.classList.remove("busy");
   }, timming * 1000 + 7000);
